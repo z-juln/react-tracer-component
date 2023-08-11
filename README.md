@@ -35,3 +35,15 @@ const App = () => (
   </Tracer.div>
 );
 ```
+
+## more
+
+Tracer.div
+Tracer.li
+Tracer.ul
+Tracer.span
+...
+
+All soundtrack dom tags support
+
+所有原声 dom 标签都支持
