@@ -1,0 +1,50 @@
+{
+  "name": "react-tracer-component",
+  "version": "1.0.0",
+  "description": "支持曝光埋点、点击埋点的react组件, 不会影响dom结构, 不需要多包一层div",
+  "main": "./dist/index.js",
+  "typings": "./dist/index.d.ts",
+  "files": [
+    "dist/*",
+    "src/*"
+  ],
+  "scripts": {
+    "build": "npx tsc",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "tracer",
+    "bury",
+    "exposure",
+    "point",
+    "埋点",
+    "react",
+    "component"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/z-juln/react-tracer-component"
+  },
+  "bugs": {
+    "email": "1850021148@qq.com"
+  },
+  "contributors": [
+    {
+      "name": "juln",
+      "email": "1850021148@qq.com"
+    }
+  ],
+  "author": "juln",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/react": "^18.2.20",
+    "react": "^16.9.0",
+    "typescript": "^4.7.4"
+  },
+  "peerDependencies": {
+    "react": ">=16.9.0"
+  }
+}
