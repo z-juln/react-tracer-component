@@ -135,29 +135,3 @@ const getTracerComponent = <
 };
 
 export default getTracerComponent;
-type TracerClickParams = {
-  act: "click";
-  clickKey1: any;
-} & {
-  [K in string]?: any;
-};
-type TracerExposureParams = {
-  act: "exposure";
-  exposureKey1: any;
-} & {
-  [K in string]?: any;
-};
-const Tracer = getTracerComponent<TracerClickParams, TracerExposureParams>({
-  sendData: () => {},
-  onError: (err) => console.info("tracer err: ", err),
-});
-// error
-const node1 = (
-  <Tracer.div clickTrackParam={{ act: "click", clickKey1: "", a: "a" }} />
-);
-// ok
-const node2 = (
-  <Tracer.div
-    exposureTrackParam={{ act: "exposure", exposureKey1: "", a: "a" }}
-  />
-);
