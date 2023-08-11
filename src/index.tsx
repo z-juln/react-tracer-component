@@ -7,32 +7,39 @@ import type {
 } from "react";
 import type { TagName } from "./tagNames";
 
-interface TrackerProps<TrackParams = any> {
-  clickTrackParam?: TrackParams;
-  exposureTrackParam?: TrackParams;
+interface TrackerProps<TrackClickParams = any, TrackExposureParams = any> {
+  clickTrackParam?: TrackClickParams;
+  exposureTrackParam?: TrackExposureParams;
   onClick?: MouseEventHandler;
 }
 
-export type SendData<TrackParams = any> = (
-  type: "click" | "exposure",
-  trackerParams: TrackParams
-) => void;
+export interface SendData<TrackClickParams = any, TrackExposureParams = any> {
+  (type: "click", trackerParams: TrackClickParams): void;
+  (type: "exposure", trackerParams: TrackExposureParams): void;
+}
 
-type TrackerEl<T extends TagName = "div"> = (
-  props: TrackerProps & {
+type TrackerEl<
+  T extends TagName = "div",
+  TrackClickParams = any,
+  TrackExposureParams = any
+> = (
+  props: TrackerProps<TrackClickParams, TrackExposureParams> & {
     children?: React.ReactNode;
   } & JSX.IntrinsicElements[T]
 ) => JSX.Element;
 
-type TrackerElMap = {
-  [T in TagName]: TrackerEl<T>;
+type TrackerElMap<TrackClickParams = any, TrackExposureParams = any> = {
+  [T in TagName]: TrackerEl<T, TrackClickParams, TrackExposureParams>;
 };
 
-const getTracerComponent = <TrackParams extends any = any>({
+const getTracerComponent = <
+  TrackClickParams extends any = any,
+  TrackExposureParams extends any = any
+>({
   sendData,
   onError,
 }: {
-  sendData: SendData<TrackParams>;
+  sendData: SendData<TrackClickParams, TrackExposureParams>;
   onError?: (err: any) => void;
 }) => {
   const exposureAttrKey = "rtc-exposure";
@@ -64,7 +71,12 @@ const getTracerComponent = <TrackParams extends any = any>({
   const Tracker = <T extends TagName = "div">(
     TagName: TagName = "div"
   ): TrackerEl<T> => {
-    return (props: PropsWithChildren<TrackerProps> & HTMLAttributes<any>) => {
+    return (
+      props: PropsWithChildren<
+        TrackerProps<TrackClickParams, TrackExposureParams>
+      > &
+        HTMLAttributes<any>
+    ) => {
       const {
         children = null,
         clickTrackParam,
@@ -106,18 +118,46 @@ const getTracerComponent = <TrackParams extends any = any>({
     };
   };
 
-  const trackerMap: TrackerElMap = (() => {
-    // @ts-ignore
-    const trackerMap: TrackerElMap = tagNames.reduce((total, tag) => {
+  const trackerMap: TrackerElMap<TrackClickParams, TrackExposureParams> =
+    (() => {
       // @ts-ignore
-      total[tag] = Tracker(tag);
-      return total;
-      // @ts-ignore
-    }, {});
-    return trackerMap;
-  })();
+      const trackerMap: TrackerElMap<TrackClickParams, TrackExposureParams> =
+        tagNames.reduce((total, tag) => {
+          // @ts-ignore
+          total[tag] = Tracker(tag);
+          return total;
+          // @ts-ignore
+        }, {});
+      return trackerMap;
+    })();
 
   return trackerMap;
 };
 
 export default getTracerComponent;
+type TracerClickParams = {
+  act: "click";
+  clickKey1: any;
+} & {
+  [K in string]?: any;
+};
+type TracerExposureParams = {
+  act: "exposure";
+  exposureKey1: any;
+} & {
+  [K in string]?: any;
+};
+const Tracer = getTracerComponent<TracerClickParams, TracerExposureParams>({
+  sendData: () => {},
+  onError: (err) => console.info("tracer err: ", err),
+});
+// error
+const node1 = (
+  <Tracer.div clickTrackParam={{ act: "click", clickKey1: "", a: "a" }} />
+);
+// ok
+const node2 = (
+  <Tracer.div
+    exposureTrackParam={{ act: "exposure", exposureKey1: "", a: "a" }}
+  />
+);

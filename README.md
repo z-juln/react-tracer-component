@@ -28,7 +28,8 @@ const Tracer = getTracerComponent({
 });
 
 // const App = () => <div>this is app</div>;
-// replace to
+// replace with
+// 替换成
 const App = () => (
   <Tracer.div clickTrackParam={{ a: 'a', b: 'b', ... }} exposureTrackParam={{ a: 'a', b: 'b', ... }}>
     this is app
@@ -36,7 +37,7 @@ const App = () => (
 );
 ```
 
-## more
+## more tag
 
 Tracer.div
 Tracer.li
@@ -47,3 +48,44 @@ Tracer.span
 All soundtrack dom tags support
 
 所有原声 dom 标签都支持
+
+## more
+
+Supports Typescript paradigm constraints
+
+支持 Typescript 范型约束
+
+```typescript
+type TracerClickParams = {
+  act: "click";
+  clickKey1: any;
+} & {
+  [K in string]?: any;
+};
+type TracerExposureParams = {
+  act: "exposure";
+  exposureKey1: any;
+} & {
+  [K in string]?: any;
+};
+const Tracer = getTracerComponent<TracerClickParams, TracerExposureParams>({
+  sendData: () => {},
+  onError: (err) => console.info("tracer err: ", err),
+});
+// error
+const node1 = (
+  <>
+    <Tracer.div clickTrackParam={{ a: "a" }} />
+    <Tracer.div exposureTrackParam={{ a: "a" }} />
+  </>
+);
+// ok
+const node2 = (
+  <>
+    <Tracer.div clickTrackParam={{ act: "click", clickKey1: "", a: "a" }} />
+    <Tracer.div
+      exposureTrackParam={{ act: "exposure", exposureKey1: "", a: "a" }}
+    />
+  </>
+);
+```
