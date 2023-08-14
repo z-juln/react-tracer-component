@@ -78,7 +78,6 @@ const getTracerComponent = <
         HTMLAttributes<any>
     ) => {
       const {
-        children = null,
         clickTrackParam,
         exposureTrackParam = {},
         onClick: onUserClick,
