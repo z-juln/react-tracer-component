@@ -1,6 +1,6 @@
 {
   "name": "react-tracer-component",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "支持曝光埋点、点击埋点的react组件, 不会影响dom结构, 不需要多包一层div",
   "main": "./dist/index.js",
   "typings": "./dist/index.d.ts",

@@ -79,7 +79,7 @@ const getTracerComponent = <
     ) => {
       const {
         clickTrackParam,
-        exposureTrackParam = {},
+        exposureTrackParam,
         onClick: onUserClick,
         ...restProps
       } = props;
