@@ -108,9 +108,11 @@ const getTracerComponent = <
         <Comp
           ref={exposureRef}
           onClick={onClick}
-          {...{
-            [`data-${exposureAttrKey}`]: JSON.stringify(exposureTrackParam),
-          }}
+          {...(exposureTrackParam
+            ? {
+                [`data-${exposureAttrKey}`]: JSON.stringify(exposureTrackParam),
+              }
+            : undefined)}
           {...restProps}
         />
       );
