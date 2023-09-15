@@ -1,16 +1,19 @@
 {
   "name": "react-tracer-component",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "支持曝光埋点、点击埋点的react组件, 不会影响dom结构, 不需要多包一层div",
-  "main": "./dist/index.js",
-  "typings": "./dist/index.d.ts",
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "typings": "lib/index.d.ts",
   "files": [
-    "dist/*",
+    "es/*",
+    "lib/*",
     "src/*"
   ],
   "scripts": {
-    "build": "npx tsc",
-    "prepublishOnly": "npm run build"
+    "prepublishOnly": "npm run build",
+    "build": "npm run clean && rollup -c",
+    "clean": "rimraf ./es && rimraf ./lib"
   },
   "keywords": [
     "tracer",
@@ -41,9 +44,17 @@
   "author": "juln",
   "license": "ISC",
   "devDependencies": {
+    "@babel/core": "^7.22.17",
+    "@babel/preset-env": "^7.22.15",
+    "@rollup/plugin-babel": "^6.0.3",
+    "@rollup/plugin-commonjs": "^25.0.4",
+    "@rollup/plugin-node-resolve": "^15.2.1",
     "@types/react": "^18.2.20",
     "react": "^16.9.0",
-    "typescript": "^4.7.4"
+    "rimraf": "^5.0.1",
+    "rollup": "^3.29.1",
+    "rollup-plugin-typescript2": "^0.35.0",
+    "typescript": "^5.2.2"
   },
   "peerDependencies": {
     "react": ">=16.9.0"
