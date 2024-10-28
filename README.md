@@ -4,6 +4,8 @@ Support the React component for exposing buried points and clicking buried point
 
 支持曝光埋点、点击埋点的 react 组件, 不会影响 dom 结构, 不需要多包一层 div
 
+** 注: 不建议使用该库, 已经存在相同功能的知名库: `react-intersection-observer`里的InView组件 **
+
 ## install
 
 `npm i react-tracer-component -S` or `yarn add react-tracer-component -S`
